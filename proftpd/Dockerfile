@@ -11,4 +11,7 @@ RUN useradd -m dev
 RUN passwd dev < mdp
 
 
+COPY proftpd.conf /etc/proftpd.conf
+
+
 CMD ["proftpd","--nodaemon"]
