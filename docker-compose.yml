@@ -1,0 +1,37 @@
+services:
+  nginx:
+    build: ./nginx
+    image: dark_nginx
+    networks:
+      dark_net:
+        ipv4_address: 1.2.3.2
+    ports:
+      - "80:80"
+      - "443:443"  
+    volumes:
+      - dark_vol:/var/www/html/
+
+  proftpd:
+    build: ./proftpd
+    image: dark_proftpd
+    networks:
+      dark_net:
+        ipv4_address: 1.2.3.3
+    ports:
+      - "2222:2222"
+    volumes:
+      - dark_vol:/home/dev/
+    environment:
+      - VAR=valeur
+
+volumes:
+  dark_vol:
+
+networks:
+  dark_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 1.2.3.0/24
+          gateway: 1.2.3.1
+
